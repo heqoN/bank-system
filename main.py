@@ -1,11 +1,13 @@
 import sys
 import time
 import random
+import os
 
 
 def createFiles():
-  with open("accounts.txt","w",encoding="utf-8") as f:
-    pass
+    if not os.path.exists("accounts.txt"):   
+        with open("accounts.txt", "w", encoding="utf-8"):
+            pass
 
 createFiles()
 
@@ -64,9 +66,9 @@ def login():
         found = False
         for line in file :
           parts = line.strip().split("|")
-          storedname,storeddate,storedemail,storedpassw,storediban = parts
           if len(parts) != 5:
             continue
+          storedname,storeddate,storedemail,storedpassw,storediban = parts
           if email==storedemail and passw==storedpassw :
             print("  Başarıyla giriş yaptınız .")
             print(f"  Hoşgeldiniz {storedname} . Iban numaranız. >> {storediban}")
@@ -94,7 +96,8 @@ def send():
 
 
 def loginmenu():
-  while isexit=False :
+  isexit = False
+  while isexit==False :
     print("\n\n"+"Seçenekler".center(25,"-"))
     order2 = input("\n   Bakiye görüntüle -1\n   Para yatır -2\n   Para çek -3\n   Para gönder -4\n   Çıkış yap -5\n\n     >>> ")
     if order2 == "1" :
@@ -109,7 +112,7 @@ def loginmenu():
       print("  Çıkış yapılıyor ... ")
       isexit = True
     else:
-      print("yanlış tuşlama".center(50,"*")
+      print("yanlış tuşlama".center(50,"*"))
     
 
 
