@@ -1,8 +1,11 @@
 import sys
 import time
+import random
+
 
 def createFiles():
-  pass
+  with open("accounts.txt","w",encoding="utf-8"):
+    continue
 
 def exit():
   print("  Çıkış yapılıyor ...")
@@ -10,7 +13,27 @@ def exit():
   sys.exit()
 
 def register():
-  pass
+  name = input("  İsminizi giriniz (tam isim)  >> ")
+  date = int(input("  Doğum yılınızı giriniz  >> "))
+  age = 2025 - date
+  if age < 18 :
+    print("  18 yaşından küçük olduğunuz için hesap oluşturulamıyor .")
+    exit()
+  email = input("  Eposta adresinizi giriniz  >> ")
+  while True :
+    passw1 = input("  Oluşturmak istediğiniz şifrenizi giriniz  >> ")
+    passw2 = input("  Tekrar giriniz  >> ")
+    if passw1 == passw2 :
+      print("  Şifreniz başarıyla oluşturuldu.")
+      return True
+    else:
+      x = input("  Girdiğiniz şifreler uyuşmuyor . Tekrar deneyiniz veya çıkış yapmak istiyorsanız exit yazın .")
+      if x == "exit" :
+        exit()
+      else:
+        continue
+    
+
 
 def login():
   pass
