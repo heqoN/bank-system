@@ -8,7 +8,7 @@ def createFiles():
     pass
 
 
-def exit():
+def shutdown():
   print("  Çıkış yapılıyor ...")
   time.sleep(3)
   sys.exit()
@@ -20,7 +20,7 @@ def register():
   age = 2025 - date
   if age < 18 :
     print("  18 yaşından küçük olduğunuz için hesap oluşturulamıyor .")
-    exit()
+    shutdown()
   email = input("  Eposta adresinizi giriniz  >> ")
   iban = random.randint(10**15,10**16-1)
   while True :
@@ -34,7 +34,7 @@ def register():
     else:
       x = input("  Girdiğiniz şifreler uyuşmuyor . Tekrar deneyiniz veya çıkış yapmak istiyorsanız exit yazın .")
       if x == "exit" :
-        exit()
+        shutdown()
       else:
         continue
     
@@ -50,13 +50,14 @@ def login():
           storedname,storeddate,storedemail,storedpassw,storediban = parts
           if email==storedemail and passw==storedpassw :
             print("  Başarıyla giriş yaptınız .")
+            found = True
             return True
-          if not found :
-            x = input("  Girdiğiniz eposta veya şifre hatalı . Tekrar deneyiniz veya çıkmak istiyorsanız exit yazınız  >> ")
-            if x == "exit":
-              exit()
-            else:
-              continue
+        if not found :
+          x = input("  Girdiğiniz eposta veya şifre hatalı . Tekrar deneyiniz veya çıkmak istiyorsanız exit yazınız  >> ")
+          if x == "exit":
+             shutdown()
+          else:
+            continue
 
 
 
@@ -72,7 +73,7 @@ def adminlogin():
     else :
       x = input("  Email veya şifre hatalı . Tekrar deneyin veya exit yazarak çıkış yapın.")
       if x == "exit" :
-        exit()
+        shutdown()
       else:
         continue
         
@@ -94,4 +95,4 @@ elif order1 == "4" :
   adminlogin()
 else :
   print("  Bir hata oluştu.")
-  exit()
+  shutdown()
