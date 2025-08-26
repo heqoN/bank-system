@@ -54,7 +54,7 @@ def register():
         shutdown()
       else:
         continue
-    
+
 
 def login():
     while True :
@@ -69,6 +69,7 @@ def login():
             continue
           if email==storedemail and passw==storedpassw :
             print("  Başarıyla giriş yaptınız .")
+            print(f"  Hoşgeldiniz {storedname} . Iban numaranız. >> {storediban}")
             found = True
             return True
         if not found :
@@ -79,8 +80,42 @@ def login():
             continue
 
 
+def showBalance():
+  pass
+
+def deposit():
+  pass
+
+def withdraw():
+  pass
+
+def send():
+  pass
+
+
+def loginmenu():
+  while isexit=False :
+    print("\n\n"+"Seçenekler".center(25,"-"))
+    order2 = input("\n   Bakiye görüntüle -1\n   Para yatır -2\n   Para çek -3\n   Para gönder -4\n   Çıkış yap -5\n\n     >>> ")
+    if order2 == "1" :
+      showBalance()
+    elif order2 == "2" :
+      deposit()
+    elif order2 == "3" :
+      withdraw()
+    elif order2 == "4" :
+      send()
+    elif order2 == "5" :
+      print("  Çıkış yapılıyor ... ")
+      isexit = True
+    else:
+      print("yanlış tuşlama".center(50,"*")
+    
+
+
 
 def adminlogin():
+  
   adminmail = "admin@heqon.com"
   adminpassw = "1453"
   while True :
@@ -108,6 +143,7 @@ if order1 == "1" :
   register()
 elif order1 == "2" :
   login()
+  loginmenu()
 elif order1 == "3" :
   shutdown()
 elif order1 == "4" :
