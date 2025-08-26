@@ -41,16 +41,41 @@ def register():
 
 def login():
   with open("accounts.txt","r",encoding="utf-8") as file :
-    email = input("  Emailinizi giriniz. >> ")
-    passw = input("  Şifrenizi giriniz. >> ")
-    for line in file :
-      parts = line.strip().split()
-      storedname,storeddate,storedemail,storedpassw,storediban = parts
-      if email==storedemail and passw==storedpassw :
-        
+    while True :
+      email = input("  Emailinizi giriniz. >> ")
+      passw = input("  Şifrenizi giriniz. >> ")
+      for line in file :
+        parts = line.strip().split()
+        storedname,storeddate,storedemail,storedpassw,storediban = parts
+        if email==storedemail and passw==storedpassw :
+          print("  Başarıyla giriş yaptınız .")
+          return True
+        else:
+          x = input("  Girdiğiniz eposta veya şifre hatalı . Tekrar deneyiniz veya çıkmak istiyorsanız exit yazınız  >> ")
+          if x == "exit":
+            exit()
+          else:
+            continue
+
+
 
 def adminlogin():
-  pass
+  adminmail = "admin@heqon.com"
+  adminpassw = "1453"
+  while True :
+    email = input("  Emaili giriniz  >> ")
+    passw = input("  Şifreyi giriniz  >> ")
+    if email==adminmail and passw==adminpassw :
+      print("  Başarıyla giriş yapıldı .")
+      return True
+    else :
+      x = input("  Email veya şifre hatalı . Tekrar deneyin veya exit yazarak çıkış yapın.")
+      if x == "exit" :
+        exit()
+      else:
+        continue
+        
+  
 
 
 
