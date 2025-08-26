@@ -43,7 +43,7 @@ def register():
                     print("  Bu eposta adresi ile zaten kayıt yapılmış!")
                     return False
   except Exception as e:
-    print(f"Dosya okuma hatası: {e}")
+    print(f"  Dosya okuma hatası  >> {e}")
     return False
         
         
