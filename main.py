@@ -7,6 +7,7 @@ def createFiles():
   with open("accounts.txt","w",encoding="utf-8") as f:
     pass
 
+createFiles()
 
 def shutdown():
   print("  Çıkış yapılıyor ...")
@@ -22,12 +23,25 @@ def register():
     print("  18 yaşından küçük olduğunuz için hesap oluşturulamıyor .")
     shutdown()
   email = input("  Eposta adresinizi giriniz  >> ")
+  try:
+        with open("accounts.txt", "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split("|")
+                if len(parts) != 5:
+                    continue
+                _, _, storedemail, _, _ = parts
+                if email == storedemail:
+                    print("  Bu eposta adresi ile zaten kayıt yapılmış!")
+                    return False
+        
+        
+
   iban = random.randint(10**15,10**16-1)
   while True :
     passw1 = input("  Oluşturmak istediğiniz şifrenizi giriniz  >> ")
     passw2 = input("  Tekrar giriniz  >> ")
     if passw1 == passw2 :
-      print("  Şifreniz başarıyla oluşturuldu.")
+      print("  Başarıyla kayıt oldunuz .")
       with open("accounts.txt","a",encoding="utf-8") as file :
         file.write(f"{name}|{date}|{email}|{passw1}|{iban}\n")
       return True
