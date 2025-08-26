@@ -90,7 +90,7 @@ if order1 == "1" :
 elif order1 == "2" :
   login()
 elif order1 == "3" :
-  exit()
+  shutdown()
 elif order1 == "4" :
   adminlogin()
 else :
