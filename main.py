@@ -71,7 +71,7 @@ def login():
           storedname,storeddate,storedemail,storedpassw,storediban = parts
           if email==storedemail and passw==storedpassw :
             print("  Başarıyla giriş yaptınız .")
-            print(f"  Hoşgeldiniz {storedname} . Iban numaranız. >> {storediban}")
+            print(f"\n\n  Hoşgeldiniz {storedname} . Iban numaranız. >> {storediban}")
             found = True
             return True
         if not found :
@@ -141,16 +141,18 @@ def adminlogin():
 
 print("by heqoN".center(100,"-"))
 print("  Banka sistemi projeme hoşgeldiniz.")
-order1 = input("SEÇENEKLER".center(25,"*")+"\n\n   Kayıt ol -1\n  Giriş yap -2\n Çıkış yap -3\n  Admin girişi  -4\n\n   >>> ")
-if order1 == "1" :
-  register()
-elif order1 == "2" :
-  login()
-  loginmenu()
-elif order1 == "3" :
-  shutdown()
-elif order1 == "4" :
-  adminlogin()
-else :
-  print("  Bir hata oluştu.")
-  shutdown()
+isquit = False
+while isquit == False :
+  order1 = input("SEÇENEKLER".center(25,"*")+"\n\n   Kayıt ol -1\n  Giriş yap -2\n Çıkış yap -3\n  Admin girişi  -4\n\n   >>> ")
+  if order1 == "1" :
+    register()
+  elif order1 == "2" :
+    login()
+    loginmenu()
+  elif order1 == "3" :
+    shutdown()
+  elif order1 == "4" :
+    adminlogin()
+  else :
+    print("  Bir hata oluştu.")
+    shutdown()
