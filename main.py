@@ -91,7 +91,7 @@ def getAccnum():
     accnum = random.randint(1000,9999)
     print(f"\n  Hesap numaranız  >> {accnum} \n  Hesap numaranızı kaybetmemeniz önemlidir.")
     with open("money.txt","a",encoding="utf-8") as file :
-        file.write(accnum+"|"+0+"\n")
+        file.write(f"{accnum}|0\n")
 
 def showBalance():
   isexit = False
