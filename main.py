@@ -4,13 +4,15 @@ import random
 
 
 def createFiles():
-  with open("accounts.txt","w",encoding="utf-8"):
-    continue
+  with open("accounts.txt","w",encoding="utf-8") as f:
+    pass
+
 
 def exit():
   print("  Çıkış yapılıyor ...")
   time.sleep(3)
   sys.exit()
+
 
 def register():
   name = input("  İsminizi giriniz (tam isim)  >> ")
@@ -26,6 +28,8 @@ def register():
     passw2 = input("  Tekrar giriniz  >> ")
     if passw1 == passw2 :
       print("  Şifreniz başarıyla oluşturuldu.")
+      with open("accounts.txt","a",encoding="utf-8") as file :
+        file.write(f"{name}|{date}|{email}|{passw1}|{iban}\n")
       return True
     else:
       x = input("  Girdiğiniz şifreler uyuşmuyor . Tekrar deneyiniz veya çıkış yapmak istiyorsanız exit yazın .")
@@ -33,29 +37,26 @@ def register():
         exit()
       else:
         continue
-  with open("accounts.txt","a",encoding="utf-8") as file :
-    file.write(f"{name}|{date}|{email}|{passw1}|{iban}\n")
-    print("  Başarıyla kayıt oldunuz .")
     
 
-
 def login():
-  with open("accounts.txt","r",encoding="utf-8") as file :
     while True :
       email = input("  Emailinizi giriniz. >> ")
       passw = input("  Şifrenizi giriniz. >> ")
-      for line in file :
-        parts = line.strip().split()
-        storedname,storeddate,storedemail,storedpassw,storediban = parts
-        if email==storedemail and passw==storedpassw :
-          print("  Başarıyla giriş yaptınız .")
-          return True
-        else:
-          x = input("  Girdiğiniz eposta veya şifre hatalı . Tekrar deneyiniz veya çıkmak istiyorsanız exit yazınız  >> ")
-          if x == "exit":
-            exit()
-          else:
-            continue
+      with open("accounts.txt","r",encoding="utf-8") as file:
+        found = False
+        for line in file :
+          parts = line.strip().split("|")
+          storedname,storeddate,storedemail,storedpassw,storediban = parts
+          if email==storedemail and passw==storedpassw :
+            print("  Başarıyla giriş yaptınız .")
+            return True
+          if not found :
+            x = input("  Girdiğiniz eposta veya şifre hatalı . Tekrar deneyiniz veya çıkmak istiyorsanız exit yazınız  >> ")
+            if x == "exit":
+              exit()
+            else:
+              continue
 
 
 
@@ -80,7 +81,7 @@ def adminlogin():
 
 
 
-print("by heqoN".center(100,"-")
+print("by heqoN".center(100,"-"))
 print("  Banka sistemi projeme hoşgeldiniz.")
 order1 = input("SEÇENEKLER".center(25,"*")+"\n\n   Kayıt ol -1\n  Giriş yap -2\n Çıkış yap -3\n  Admin girişi  -4\n\n   >>> ")
 if order1 == "1" :
