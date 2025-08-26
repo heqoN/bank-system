@@ -87,15 +87,17 @@ def login():
              shutdown()
           else:
             continue
+
+
 def getAccnum():
     accnum = random.randint(1000,9999)
     print(f"\n  Hesap numaranız  >> {accnum} \n  Hesap numaranızı kaybetmemeniz önemlidir.")
     with open("money.txt","a",encoding="utf-8") as file :
         file.write(f"{accnum}|0\n")
 
+
 def showBalance():
-  isexit = False
-  while isexit == False :
+  while True :
       accnum = input("  Hesap numaranızı giriniz  >> ")
       with open("money.txt","r",encoding="utf-8") as file :
           for line in file :
@@ -103,15 +105,43 @@ def showBalance():
               storedaccnum,storedmoney = parts
               if accnum == storedaccnum :
                   print(f"  Bakiyeniz  >> {storedmoney}")
-                  isexit = True
+                  return True
           x = input("  Bu hesap numarası bulunamadı .Tekrar deneyin veya çıkmak için exit yazın.")
           if x == "exit" :
-              isexit = True
+              return False
           
                   
 
 def deposit():
-  pass
+    accnum = input("  Hesap numaranızı giriniz  >> ")
+    amount = int(input("  Yüklemek istediğiniz miktar  >> "))
+
+    with open("money.txt", "r", encoding="utf-8") as file:
+        lines = file.readlines()
+
+    updated_lines = []
+    found = False
+
+    for line in lines:
+        parts = line.strip().split("|")
+        if len(parts) == 2:
+            storedaccnum, money = parts
+            if storedaccnum == accnum:
+                dpst = int(money) + amount
+                updated_lines.append(f"{storedaccnum}|{dpst}\n")
+                found = True
+            else:
+                updated_lines.append(line)
+        else:
+            updated_lines.append(line)  # format dışı satır varsa koru
+
+    if found:
+        with open("money.txt", "w", encoding="utf-8") as file:
+            file.writelines(updated_lines)
+        print("  Para yatırma işlemi başarılı.")
+    else:
+        print("  Hesap numarası bulunamadı.")
+        
 
 def withdraw():
   pass
