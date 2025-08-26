@@ -48,6 +48,8 @@ def login():
         for line in file :
           parts = line.strip().split("|")
           storedname,storeddate,storedemail,storedpassw,storediban = parts
+          if len(parts) != 5:
+            continue
           if email==storedemail and passw==storedpassw :
             print("  Başarıyla giriş yaptınız .")
             found = True
