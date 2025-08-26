@@ -20,6 +20,7 @@ def register():
     print("  18 yaşından küçük olduğunuz için hesap oluşturulamıyor .")
     exit()
   email = input("  Eposta adresinizi giriniz  >> ")
+  iban = random.randint(10**15,10**16-1)
   while True :
     passw1 = input("  Oluşturmak istediğiniz şifrenizi giriniz  >> ")
     passw2 = input("  Tekrar giriniz  >> ")
@@ -32,11 +33,21 @@ def register():
         exit()
       else:
         continue
+  with open("accounts.txt","a",encoding="utf-8") as file :
+    file.write(f"{name}|{date}|{email}|{passw1}|{iban}\n")
+    print("  Başarıyla kayıt oldunuz .")
     
 
 
 def login():
-  pass
+  with open("accounts.txt","r",encoding="utf-8") as file :
+    email = input("  Emailinizi giriniz. >> ")
+    passw = input("  Şifrenizi giriniz. >> ")
+    for line in file :
+      parts = line.strip().split()
+      storedname,storeddate,storedemail,storedpassw,storediban = parts
+      if email==storedemail and passw==storedpassw :
+        
 
 def adminlogin():
   pass
