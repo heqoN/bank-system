@@ -5,9 +5,16 @@ import os
 
 
 def createFiles():
-    if not os.path.exists("accounts.txt"):   
-        with open("accounts.txt", "w", encoding="utf-8"):
-            pass
+  if not os.path.exists("accounts.txt"):   
+    with open("accounts.txt", "w", encoding="utf-8"):
+      pass
+  if not os.path.exists("money.txt"):   
+    with open("money.txt", "w", encoding="utf-8"):
+      pass
+            
+  if not os.path.exists("logs.txt"):   
+    with open("logs.txt", "w", encoding="utf-8"):
+      pass
 
 createFiles()
 
@@ -80,10 +87,28 @@ def login():
              shutdown()
           else:
             continue
-
+def getAccnum():
+    accnum = random.randint(1000,9999)
+    print(f"\n  Hesap numaranız  >> {accnum} \n  Hesap numaranızı kaybetmemeniz önemlidir.")
+    with open("money.txt","a",encoding="utf-8") as file :
+        file.write(accnum+"|"+0+\n)
 
 def showBalance():
-  pass
+  isexit = False
+  while isexit == False :
+      accnum = input("  Hesap numaranızı giriniz  >> ")
+      with open("money.txt","r",encoding="utf-8") as file :
+          for line in file :
+              parts = line.strip().split("|")
+              storedaccnum,storedmoney = parts
+              if accnum == storedaccnum :
+                  print(f"  Bakiyeniz  >> {storedmoney}")
+                  isexit = True
+          x = input("  Bu hesap numarası bulunamadı .Tekrar deneyin veya çıkmak için exit yazın.")
+          if x == "exit" :
+              isexit = True
+          
+                  
 
 def deposit():
   pass
@@ -99,7 +124,7 @@ def loginmenu():
   isexit = False
   while isexit==False :
     print("\n\n"+"Seçenekler".center(25,"-"))
-    order2 = input("\n   Bakiye görüntüle -1\n   Para yatır -2\n   Para çek -3\n   Para gönder -4\n   Çıkış yap -5\n\n     >>> ")
+    order2 = input("\n   Bakiye görüntüle -1\n   Para yatır -2\n   Para çek -3\n   Para gönder -4\n   Çıkış yap -5\n   Hesap numarası al -6\n\n     >>> ")
     if order2 == "1" :
       showBalance()
     elif order2 == "2" :
@@ -109,8 +134,9 @@ def loginmenu():
     elif order2 == "4" :
       send()
     elif order2 == "5" :
-      print("  Çıkış yapılıyor ... ")
-      isexit = True
+      shutdown()
+    elif order2 == "6" :
+        getAccnum()
     else:
       print("yanlış tuşlama".center(50,"*"))
     
@@ -150,7 +176,8 @@ while isquit == False :
     login()
     loginmenu()
   elif order1 == "3" :
-    shutdown()
+    print("  Çıkış yapılıyor ... ")
+    isquit = True
   elif order1 == "4" :
     adminlogin()
   else :
