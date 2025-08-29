@@ -133,21 +133,124 @@ def deposit():
             else:
                 updated_lines.append(line)
         else:
-            updated_lines.append(line)  # format dışı satır varsa koru
+            updated_lines.append(line)  
 
     if found:
         with open("money.txt", "w", encoding="utf-8") as file:
             file.writelines(updated_lines)
         print("  Para yatırma işlemi başarılı.")
+
+        with open("logs.txt","a",encoding="utf-8") as file :
+          file.write(f" {storedaccnum} numaralı hesaba {amount} miktarında para yüklendi bakiye >> {dpst}\n")
     else:
         print("  Hesap numarası bulunamadı.")
         
 
 def withdraw():
-  pass
+    accnum = input("  Hesap numaranızı giriniz  >> ")
+    amount = int(input("  Çekmek istediğiniz miktarı giriniz >> "))
+
+    updated_lines = []
+    found = False
+
+    with open("money.txt","r",encoding="utf-8") as file :
+       lines = file.readlines()
+    for line in lines :
+       parts = line.strip().split("|")
+       if len(parts) == 2:
+          storedaccnum,money=parts
+          if storedaccnum==accnum :
+             wthdrw = int(money) - amount
+             if wthdrw < 0 :
+                print("  Hesabınızda bu kadar para yok !")
+                return False
+             updated_lines.append(f"{storedaccnum}|{wthdrw}")
+             found = True
+          else:
+             updated_lines.append(line)
+       else:
+          updated_lines.append(line)
+    
+    if found :
+      with open("money.txt","w",encoding="utf-8") as file :
+          file.writelines(updated_lines)
+      print("  Para yatırma işlemi başarılı .")
+
+      with open("logs.txt","a",encoding="utf-8") as file :
+         file.write(f" {storedaccnum} numaralı hesaptan {amount} miktarında para çekildi bakiye >> {wthdrw}\n")
+    
+    else:
+       print("  Hesap numarası bulunamadı.")
+  
+
+              
+     
 
 def send():
-  pass
+    accnum = input("  Hesap numaranızı giriniz  >> ").strip()
+    accnum2 = input("  Transfer yapmak istediğiniz hesabın numarasını giriniz  >> ").strip()
+    if accnum == accnum2:
+        print("  Aynı hesaba transfer yapılamaz.")
+        return False
+
+    try:
+        amount = int(input("  Yollamak istediğiniz miktarı giriniz  >> ").strip())
+        if amount <= 0:
+            raise ValueError
+    except ValueError:
+        print("  Geçerli bir pozitif sayı girin.")
+        return False
+
+    try:
+        with open("money.txt", "r", encoding="utf-8") as file:
+            lines = [line.rstrip("\n") for line in file]
+    except FileNotFoundError:
+        print("  money.txt bulunamadı.")
+        return False
+
+    new_lines = []
+    found_from = found_to = False
+    bal_from = bal_to = None
+
+    for line in lines:
+        parts = line.split("|")
+        if len(parts) != 2:
+            new_lines.append(line + "\n")
+            continue
+        stored, money = parts
+        try:
+            bal = int(money)
+        except ValueError:
+            bal = 0
+
+        if stored == accnum:
+            if bal < amount:
+                print("  Hesabınızda bu kadar para yok !")
+                return False
+            bal_from = bal - amount
+            found_from = True
+            new_lines.append(f"{stored}|{bal_from}\n")
+        elif stored == accnum2:
+            bal_to = bal + amount
+            found_to = True
+            new_lines.append(f"{stored}|{bal_to}\n")
+        else:
+            new_lines.append(line + "\n")
+
+    if not found_from:
+        print("  Gönderen hesap numarası bulunamadı.")
+        return False
+    if not found_to:
+        print("  Alıcı hesap numarası bulunamadı.")
+        return False
+
+    with open("money.txt", "w", encoding="utf-8") as file:
+        file.writelines(new_lines)
+
+    print("  Transfer başarılı.")
+    return True
+
+
 
 
 def loginmenu():
